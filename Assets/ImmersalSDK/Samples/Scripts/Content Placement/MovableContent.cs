@@ -9,7 +9,10 @@ third-parties for commercial purposes without written permission of Immersal Ltd
 Contact sales@immersal.com for licensing requests.
 ===============================================================================*/
 
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Animations;
 
 namespace Immersal.Samples.ContentPlacement
 {
@@ -24,11 +27,48 @@ namespace Immersal.Samples.ContentPlacement
         private Transform m_CameraTransform;
         private float m_MovePlaneDistance;
 
-        private void Start()
+        //public TMP_InputField itemName;
+        public int mapId;
+        public ContentType type;
+        
+        /*private LookAtConstraint lookAtConstraint;
+    
+        private Transform cameraTransform;
+
+        private Canvas canvas;
+        private BoxCollider boxCollider;*/
+
+        /*private void Awake()
+        {
+            canvas = GetComponent<Canvas>();
+            boxCollider = GetComponent<BoxCollider>();
+            lookAtConstraint = GetComponent<LookAtConstraint>();
+        }*/
+
+        protected virtual void Start()
         {
             m_CameraTransform = Camera.main.transform;
             StoreContent();
+            //LookAtCamera();
         }
+
+        /*private void LookAtCamera()
+        {
+            if (lookAtConstraint == null)
+            {
+                lookAtConstraint = gameObject.AddComponent<LookAtConstraint>();
+            }
+        
+            cameraTransform = Camera.main.transform;
+            ConstraintSource source = new ConstraintSource
+            {
+                sourceTransform = cameraTransform,
+                weight = 1
+            };
+            lookAtConstraint.AddSource(source);
+            lookAtConstraint.rotationOffset = new Vector3(0, -180, 0);
+            lookAtConstraint.constraintActive = true;
+        }*/
 
         private void Update()
         {
@@ -39,7 +79,7 @@ namespace Immersal.Samples.ContentPlacement
             }
         }
 
-        private void StoreContent()
+        protected void StoreContent()
         {
             if (!ContentStorageManager.Instance.contentList.Contains(this))
             {
@@ -74,6 +114,23 @@ namespace Immersal.Samples.ContentPlacement
             StoreContent();
             m_timeHold = 0f;
             m_EditingContent = false;
+        }
+
+        /*public void UpdateName(string inputName)
+        {
+            StoreContent();
+        }*/
+
+        public virtual void ToggleContent(bool isActive)
+        {
+            /*canvas.enabled = isActive;
+            boxCollider.enabled = isActive;
+            lookAtConstraint.enabled = isActive;*/
+        }
+        
+        public virtual TMP_InputField ItemNameInputField
+        {
+            get { return null; }
         }
     }
 }

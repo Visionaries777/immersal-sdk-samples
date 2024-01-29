@@ -30,9 +30,9 @@ namespace Immersal.Samples.Mapping
 		[SerializeField]
 		private GameObject m_PromptDeleteData = null;
 		[SerializeField]
-		private GameObject m_PromptConstructMap = null;
+		protected GameObject m_PromptConstructMap = null;
 
-		private enum UIState { Default, Options, DeleteData, SubmitNewMap };
+		protected enum UIState { Default, Options, DeleteData, SubmitNewMap };
 		private UIState uiState = UIState.Default;
 
 		public void Options() {
@@ -67,7 +67,7 @@ namespace Immersal.Samples.Mapping
 			ChangeState(uiState);
 		}
 
-		private void ChangeState(UIState state) {
+		protected virtual void ChangeState(UIState state) {
 			switch (state) {
 				case UIState.Default:
 					m_OptionsButton.Activate();

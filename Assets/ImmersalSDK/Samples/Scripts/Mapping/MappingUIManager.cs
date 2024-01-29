@@ -10,6 +10,8 @@ Contact sales@immersal.com for licensing requests.
 ===============================================================================*/
 
 using System;
+using Immersal.AR;
+using Immersal.Samples.ContentPlacement;
 using UnityEngine;
 using UnityEngine.UI;
 using Immersal.Samples.Util;
@@ -18,7 +20,12 @@ using TMPro;
 namespace Immersal.Samples.Mapping
 {
 	public class MappingUIManager : MonoBehaviour
-    {
+	{
+		private CanvasGroup canvasGroup;
+		private Mapper mapper;
+		public event SwitchModeEvent OnSwitch = null;
+		public delegate void SwitchModeEvent();
+	    
         public WorkspaceManager workspaceManager;
         public VisualizeManager visualizeManager;
         public TextMeshProUGUI locationText = null;
@@ -31,8 +38,8 @@ namespace Immersal.Samples.Mapping
         [SerializeField]
         private HorizontalProgressBar m_ProgressBar = null;
         
-		private enum UIState {Workspace, Visualize};
-		private UIState uiState = UIState.Workspace;
+		public enum UIState {Workspace, Visualize};
+		public UIState uiState = UIState.Workspace;
 
 		[SerializeField] private TextMeshProUGUI loggedInAsText = null;
 		
@@ -71,7 +78,8 @@ namespace Immersal.Samples.Mapping
 	        LoginManager.Instance.Logout();
         }
 
-		private void ChangeState(UIState state) {
+		public void ChangeState(UIState state)
+		{
 			switch (state) {
 				case UIState.Workspace:
                     workspaceManager.gameObject.SetActive(true);
@@ -96,13 +104,63 @@ namespace Immersal.Samples.Mapping
 			loggedInAsText.text = string.Empty;
 		}
 
+		private void Awake()
+		{
+			canvasGroup = GetComponent<CanvasGroup>();
+			mapper = GetComponent<Mapper>();
+		}
+
 		private void Start()
         {
-            ChangeState(uiState);
+            //ChangeState(uiState);
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
 
             m_ProgressBar.minValue = 0;
             m_ProgressBar.maxValue = 100;
             m_ProgressBar.currentValue = 0;
         }
+		
+		public void ChangeMode(bool isScan)
+		{
+			canvasGroup.alpha = 1;
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
+			
+			ChangeState(isScan ? UIState.Workspace : UIState.Visualize);
+			uiState = isScan ? UIState.Workspace : UIState.Visualize;
+
+			if (isScan)
+			{
+				mapper.ToggleVisualization(false);
+				
+				foreach (var movableContent in ContentStorageManager.Instance.contentList)
+				{
+					movableContent.ToggleContent(false);
+				}
+			}
+			else
+			{
+				mapper.ToggleVisualization(true);
+				
+				foreach (var movableContent in ContentStorageManager.Instance.contentList)
+				{
+					if (ARSpace.mapIdToMap.ContainsKey(movableContent.mapId))
+					{
+						movableContent.ToggleContent(true);
+					}
+				}
+			}
+		}
+
+		public void BackToChooseMode()
+		{
+			canvasGroup.alpha = 0;
+			canvasGroup.interactable = false;
+			canvasGroup.blocksRaycasts = false;
+			
+			OnSwitch?.Invoke();
+		}
 	}
 }
