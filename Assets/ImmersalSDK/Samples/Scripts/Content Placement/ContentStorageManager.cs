@@ -29,11 +29,13 @@ namespace Immersal.Samples.ContentPlacement
         private string m_Filename = "content.json";
         private Savefile m_Savefile;
         private List<Vector3> m_Positions = new List<Vector3>();
+        private List<string> m_Names = new List<string>();
 
         [System.Serializable]
         public struct Savefile
         {
             public List<Vector3> positions;
+            public List<string> names;
         }
 
         public static ContentStorageManager Instance
@@ -105,11 +107,14 @@ namespace Immersal.Samples.ContentPlacement
         public void SaveContents()
         {
             m_Positions.Clear();
+            m_Names.Clear();
             foreach (MovableContent content in contentList)
             {
                 m_Positions.Add(content.transform.localPosition);
+                m_Names.Add(content.itemName.text);
             }
             m_Savefile.positions = m_Positions;
+            m_Savefile.names = m_Names;
 
             string jsonstring = JsonUtility.ToJson(m_Savefile, true);
             string dataPath = Path.Combine(Application.persistentDataPath, m_Filename);
@@ -125,10 +130,17 @@ namespace Immersal.Samples.ContentPlacement
             {
                 Savefile loadFile = JsonUtility.FromJson<Savefile>(File.ReadAllText(dataPath));
 
-                foreach (Vector3 pos in loadFile.positions)
+                // foreach (Vector3 pos in loadFile.positions)
+                // {
+                //     GameObject go = Instantiate(m_ContentPrefab, m_ARSpace.transform);
+                //     go.transform.localPosition = pos;
+                // }
+
+                for (int i = 0; i < loadFile.positions.Count; i++)
                 {
                     GameObject go = Instantiate(m_ContentPrefab, m_ARSpace.transform);
-                    go.transform.localPosition = pos;
+                    go.transform.localPosition = loadFile.positions[i];
+                    go.GetComponent<MovableContent>().itemName.text = loadFile.names[i];
                 }
 
                 Debug.Log("Successfully loaded file!");

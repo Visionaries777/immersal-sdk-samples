@@ -9,6 +9,7 @@ third-parties for commercial purposes without written permission of Immersal Ltd
 Contact sales@immersal.com for licensing requests.
 ===============================================================================*/
 
+using TMPro;
 using UnityEngine;
 
 namespace Immersal.Samples.ContentPlacement
@@ -23,6 +24,8 @@ namespace Immersal.Samples.ContentPlacement
 
         private Transform m_CameraTransform;
         private float m_MovePlaneDistance;
+
+        public TMP_InputField itemName;
 
         private void Start()
         {
@@ -74,6 +77,11 @@ namespace Immersal.Samples.ContentPlacement
             StoreContent();
             m_timeHold = 0f;
             m_EditingContent = false;
+        }
+
+        public void UpdateName(string inputName)
+        {
+            StoreContent();
         }
     }
 }
