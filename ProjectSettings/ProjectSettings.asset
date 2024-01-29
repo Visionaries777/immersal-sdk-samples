@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Immersal Ltd.
+  companyName: Visionaries777
   productName: Immersal SDK Samples
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -162,7 +162,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.immersal.sdk.samples
-    iPhone: com.immersal.sdk.samples
+    iPhone: com.visionaries777.immersal.sdk.samples
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -945,11 +945,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 86682403-cabe-40ff-94ac-112881df24d5
+  cloudProjectId: 
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: push-your-luck
-  organizationId: immersal
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   hmiLoadingImage: {fileID: 0}
