@@ -18,6 +18,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Immersal.AR;
 using Immersal.REST;
+using Immersal.Samples.ContentPlacement;
 using Immersal.Samples.Util;
 using UnityEngine.Events;
 #if PLATFORM_ANDROID
@@ -692,6 +693,7 @@ namespace Immersal.Samples.Mapping
             if (ARSpace.mapIdToMap.ContainsKey(job.id))
             {
                 ARMap arMap = ARSpace.mapIdToMap[job.id];
+                ContentStorageManager.Instance.HideContents(arMap);
                 arMap.FreeMap(true);
                 return;
             }
@@ -727,6 +729,8 @@ namespace Immersal.Samples.Mapping
 
                 await ARSpace.LoadAndInstantiateARMap(root, result, ARMap.RenderMode.EditorAndRuntime, pointCloudColor, applyAlignment);
                 //await ARSpace.LoadAndInstantiateARMap(root, job, result.mapData, ARMap.RenderMode.EditorAndRuntime, pointCloudColor, applyAlignment);
+                
+                ContentStorageManager.Instance.RepositionContents(job.id);
 
                 m_Sdk.Localizer.stats.localizationAttemptCount = 0;
                 m_Sdk.Localizer.stats.localizationSuccessCount = 0;

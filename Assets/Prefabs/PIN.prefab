@@ -1069,7 +1069,6 @@ GameObject:
   - component: {fileID: 4845334420733450098}
   - component: {fileID: 471527641058367903}
   - component: {fileID: -2798330025478097643}
-  - component: {fileID: 9042980437661276754}
   - component: {fileID: 5403027510132979562}
   - component: {fileID: 8721493970268434333}
   m_Layer: 5
@@ -1188,18 +1187,6 @@ LookAtConstraint:
   m_Active: 0
   m_IsLocked: 0
   m_Sources: []
---- !u!114 &9042980437661276754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7007689986026079868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73046debc50604af6821a5e73c9e803d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5403027510132979562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,6 +1201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ClickHoldTime: 0.1
   itemName: {fileID: 2932280355369023416}
+  mapId: 0
 --- !u!65 &8721493970268434333
 BoxCollider:
   m_ObjectHideFlags: 0

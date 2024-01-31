@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
+using Immersal.AR;
 
 namespace Immersal.Samples.ContentPlacement
 {
@@ -30,12 +31,16 @@ namespace Immersal.Samples.ContentPlacement
         private Savefile m_Savefile;
         private List<Vector3> m_Positions = new List<Vector3>();
         private List<string> m_Names = new List<string>();
+        private List<int> m_MapIds = new List<int>();
+
+        private int lastLoadedMapId = -1;
 
         [System.Serializable]
         public struct Savefile
         {
             public List<Vector3> positions;
             public List<string> names;
+            public List<int> mapIds;
         }
 
         public static ContentStorageManager Instance
@@ -85,8 +90,30 @@ namespace Immersal.Samples.ContentPlacement
 
         public void AddContent()
         {
+#if UNITY_EDITOR
+            if (lastLoadedMapId == -1)
+            {
+                return;
+            }
+            ARMap map = ARSpace.mapIdToMap[lastLoadedMapId];
             Transform cameraTransform = Camera.main.transform;
-            GameObject go = Instantiate(m_ContentPrefab, cameraTransform.position + cameraTransform.forward, Quaternion.identity, m_ARSpace.transform);
+            GameObject go = Instantiate(m_ContentPrefab, cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+            go.GetComponent<MovableContent>().mapId = lastLoadedMapId;
+            
+#elif UNITY_ANDROID || UNITY_IOS
+            var lastLocalizedMapId = ImmersalSDK.Instance.Localizer.lastLocalizedMapId;
+            if (lastLocalizedMapId == -1)
+            {
+                return;
+            }
+            
+            ARMap map = ARSpace.mapIdToMap[lastLocalizedMapId];
+            
+            Transform cameraTransform = Camera.main.transform;
+            GameObject go = Instantiate(m_ContentPrefab, cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+            
+            go.GetComponent<MovableContent>().mapId = lastLocalizedMapId;
+#endif
         }
 
         public void DeleteAllContent()
@@ -108,13 +135,16 @@ namespace Immersal.Samples.ContentPlacement
         {
             m_Positions.Clear();
             m_Names.Clear();
+            m_MapIds.Clear();
             foreach (MovableContent content in contentList)
             {
                 m_Positions.Add(content.transform.localPosition);
                 m_Names.Add(content.itemName.text);
+                m_MapIds.Add(content.mapId);
             }
             m_Savefile.positions = m_Positions;
             m_Savefile.names = m_Names;
+            m_Savefile.mapIds = m_MapIds;
 
             string jsonstring = JsonUtility.ToJson(m_Savefile, true);
             string dataPath = Path.Combine(Application.persistentDataPath, m_Filename);
@@ -140,7 +170,10 @@ namespace Immersal.Samples.ContentPlacement
                 {
                     GameObject go = Instantiate(m_ContentPrefab, m_ARSpace.transform);
                     go.transform.localPosition = loadFile.positions[i];
-                    go.GetComponent<MovableContent>().itemName.text = loadFile.names[i];
+                    var movableContent = go.GetComponent<MovableContent>();
+                    movableContent.itemName.text = loadFile.names[i];
+                    movableContent.mapId = loadFile.mapIds[i];
+                    movableContent.ToggleContent(false);
                 }
 
                 Debug.Log("Successfully loaded file!");
@@ -154,6 +187,34 @@ namespace Immersal.Samples.ContentPlacement
             {
                 Debug.LogWarningFormat("{0}\n.json file for content storage not found. Created a new file!", err.Message);
                 File.WriteAllText(dataPath, "");
+            }
+        }
+
+        public void RepositionContents(int mapId)
+        {
+            ARMap map = ARSpace.mapIdToMap[mapId];
+            
+            foreach (var movableContent in contentList)
+            {
+                if (movableContent.mapId == mapId)
+                {
+                    movableContent.transform.SetParent(map.transform.parent,false);
+                    movableContent.ToggleContent(true);
+                }
+            }
+
+            lastLoadedMapId = mapId;
+        }
+
+        public void HideContents(ARMap arMap)
+        {
+            foreach (var movableContent in contentList)
+            {
+                if (movableContent.mapId == arMap.mapId)
+                {
+                    movableContent.transform.SetParent(arMap.transform.parent,false);
+                    movableContent.ToggleContent(false);
+                }
             }
         }
     }
