@@ -10,7 +10,6 @@ Contact sales@immersal.com for licensing requests.
 ===============================================================================*/
 
 using System;
-using Immersal.Samples.ContentPlacement;
 using UnityEngine;
 using UnityEngine.UI;
 using Immersal.Samples.Util;
@@ -22,7 +21,6 @@ namespace Immersal.Samples.Mapping
     {
         public WorkspaceManager workspaceManager;
         public VisualizeManager visualizeManager;
-        public ContentStorageManager contentStorageManager;
         public TextMeshProUGUI locationText = null;
         public TextMeshProUGUI vLocationText = null;
 
@@ -78,12 +76,10 @@ namespace Immersal.Samples.Mapping
 				case UIState.Workspace:
                     workspaceManager.gameObject.SetActive(true);
                     visualizeManager.gameObject.SetActive(false);
-                    contentStorageManager.gameObject.SetActive(false);
                     break;
 				case UIState.Visualize:
                     workspaceManager.gameObject.SetActive(false);
                     visualizeManager.gameObject.SetActive(true);
-                    contentStorageManager.gameObject.SetActive(true);
                     break;
 				default:
 					break;

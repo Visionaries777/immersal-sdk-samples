@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3249529763188928112}
   - component: {fileID: 6995614126826840403}
   - component: {fileID: 1150568382777905337}
+  - component: {fileID: 7515462584089955502}
   m_Layer: 5
   m_Name: Button Add Object
   m_TagString: Untagged
@@ -154,6 +155,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7515462584089955502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221688781469881891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24507462e34ef0d449ec330b63b3c4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_button: {fileID: 221688781469881891}
+  texts: []
 --- !u!1 &951494888207236074
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +235,7 @@ GameObject:
   - component: {fileID: 6868437363368457207}
   - component: {fileID: 4198294227386749945}
   - component: {fileID: 7407445656693496049}
+  - component: {fileID: 7740281854330283585}
   m_Layer: 5
   m_Name: Delete Object Area
   m_TagString: Untagged
@@ -361,6 +377,20 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &7740281854330283585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3374504898773849714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24507462e34ef0d449ec330b63b3c4c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target_button: {fileID: 3374504898773849714}
+  texts: []
 --- !u!1 &3776450407847019212
 GameObject:
   m_ObjectHideFlags: 0
