@@ -126,8 +126,10 @@ namespace Immersal.Samples.Mapping
                     m_Sdk.defaultServer = ImmersalSDK.APIServer.ChinaServer;
                 }
                 
-                emailField.text = PlayerPrefs.GetString("login", "");
-                passwordField.text = PlayerPrefs.GetString("password", "");
+                // emailField.text = PlayerPrefs.GetString("login", "");
+                // passwordField.text = PlayerPrefs.GetString("password", "");
+                emailField.text = "steven@visionaries777.com";
+                passwordField.text = "vz777vz777!";
                 serverField.text = PlayerPrefs.GetString("server", m_Sdk.localizationServer);
 
                 if (serverField.text != m_Sdk.defaultServerURL)
