@@ -877,11 +877,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69bf98867974d4a4ba48cc87a2fde8be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AutoStart: 0
+  m_AutoStart: 1
   localizationInterval: 2
-  m_UseFiltering: 0
+  m_UseFiltering: 1
   m_ResetOnMapChange: 0
-  m_BurstMode: 0
+  m_BurstMode: 1
   m_UseGeoPoseLocalizer: 0
   m_UseServerLocalizer: 0
   m_MapIds: []

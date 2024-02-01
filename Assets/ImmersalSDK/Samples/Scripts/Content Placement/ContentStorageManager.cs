@@ -91,7 +91,7 @@ namespace Immersal.Samples.ContentPlacement
         public void AddContent()
         {
 #if UNITY_EDITOR
-            if (lastLoadedMapId == -1)
+            if (lastLoadedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLoadedMapId))
             {
                 return;
             }
@@ -102,7 +102,7 @@ namespace Immersal.Samples.ContentPlacement
             
 #elif UNITY_ANDROID || UNITY_IOS
             var lastLocalizedMapId = ImmersalSDK.Instance.Localizer.lastLocalizedMapId;
-            if (lastLocalizedMapId == -1)
+            if (lastLocalizedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLoadedMapId))
             {
                 return;
             }
