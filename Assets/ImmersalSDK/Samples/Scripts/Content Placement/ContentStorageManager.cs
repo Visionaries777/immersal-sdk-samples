@@ -102,7 +102,7 @@ namespace Immersal.Samples.ContentPlacement
             
 #elif UNITY_ANDROID || UNITY_IOS
             var lastLocalizedMapId = ImmersalSDK.Instance.Localizer.lastLocalizedMapId;
-            if (lastLocalizedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLoadedMapId))
+            if (lastLocalizedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLocalizedMapId))
             {
                 return;
             }
@@ -202,8 +202,10 @@ namespace Immersal.Samples.ContentPlacement
                     movableContent.ToggleContent(true);
                 }
             }
-
+            
+#if UNITY_EDITOR
             lastLoadedMapId = mapId;
+#endif
         }
 
         public void HideContents(ARMap arMap)
