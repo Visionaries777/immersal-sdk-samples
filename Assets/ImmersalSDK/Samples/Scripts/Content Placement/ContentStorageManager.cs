@@ -27,7 +27,7 @@ namespace Immersal.Samples.ContentPlacement
         [SerializeField]
         private Immersal.AR.ARSpace m_ARSpace;
         [SerializeField]
-        private string m_Filename = "content.json";
+        public string m_Filename = "content.json";
         private Savefile m_Savefile;
         private List<Vector3> m_Positions = new List<Vector3>();
         private List<string> m_Names = new List<string>();
@@ -85,7 +85,7 @@ namespace Immersal.Samples.ContentPlacement
         private void Start()
         {
             contentList.Clear();
-            LoadContents();
+            //LoadContents();
         }
 
         public void AddContent()

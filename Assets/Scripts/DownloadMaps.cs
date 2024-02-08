@@ -29,7 +29,7 @@ public class DownloadMaps : MonoBehaviour
 
     private IEnumerator ParseJsonFileFromUrl()
     {
-        var request = UnityWebRequest.Get("https://tools.inspekly.com/alpha/Home.json");
+        var request = UnityWebRequest.Get("https://tools.inspekly.com/alpha/ICC01.json");
         yield return request.SendWebRequest();
         if (request.isDone && request.result != UnityWebRequest.Result.ConnectionError && request.responseCode == 200)
         {
