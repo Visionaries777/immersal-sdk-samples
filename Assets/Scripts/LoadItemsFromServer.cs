@@ -4,15 +4,20 @@ using System.Text;
 using Immersal.Samples.ContentPlacement;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class LoadItemsFromServer : MonoBehaviour
 {
     [SerializeField] private string serverDomain = "http://192.168.1.164:12345/manifest";
     [SerializeField] private string userId = "u001";
     private string filePath;
+
+    [SerializeField] private Button uploadButton;
     
     private void Start()
     {
+        uploadButton.interactable = false;
+        
         filePath = Path.Combine(Application.persistentDataPath, ContentStorageManager.Instance.m_Filename);
         StartCoroutine(GetItemListFromServer());
     }
@@ -23,6 +28,8 @@ public class LoadItemsFromServer : MonoBehaviour
         webRequest.SetRequestHeader("UID", userId);
             
         yield return webRequest.SendWebRequest();
+        
+        uploadButton.interactable = true;
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
@@ -40,6 +47,8 @@ public class LoadItemsFromServer : MonoBehaviour
 
     public void UploadItemList()
     {
+        uploadButton.interactable = false;
+        
         StartCoroutine(UpdateItemListFromServer());
     }
 
@@ -53,6 +62,8 @@ public class LoadItemsFromServer : MonoBehaviour
         webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         
         yield return webRequest.SendWebRequest();
+        
+        uploadButton.interactable = true;
         
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
