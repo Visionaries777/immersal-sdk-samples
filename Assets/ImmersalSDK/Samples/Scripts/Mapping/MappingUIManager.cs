@@ -18,7 +18,11 @@ using TMPro;
 namespace Immersal.Samples.Mapping
 {
 	public class MappingUIManager : MonoBehaviour
-    {
+	{
+		private CanvasGroup canvasGroup;
+		public event SwitchModeEvent OnSwitch = null;
+		public delegate void SwitchModeEvent();
+	    
         public WorkspaceManager workspaceManager;
         public VisualizeManager visualizeManager;
         public TextMeshProUGUI locationText = null;
@@ -96,13 +100,39 @@ namespace Immersal.Samples.Mapping
 			loggedInAsText.text = string.Empty;
 		}
 
+		private void Awake()
+		{
+			canvasGroup = GetComponent<CanvasGroup>();
+		}
+
 		private void Start()
         {
-            ChangeState(uiState);
+            //ChangeState(uiState);
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
 
             m_ProgressBar.minValue = 0;
             m_ProgressBar.maxValue = 100;
             m_ProgressBar.currentValue = 0;
         }
+		
+		public void ChangeMode(bool isScan)
+		{
+			canvasGroup.alpha = 1;
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
+			
+			ChangeState(isScan ? UIState.Workspace : UIState.Visualize);
+		}
+
+		public void BackToChooseMode()
+		{
+			canvasGroup.alpha = 0;
+			canvasGroup.interactable = false;
+			canvasGroup.blocksRaycasts = false;
+			
+			OnSwitch?.Invoke();
+		}
 	}
 }

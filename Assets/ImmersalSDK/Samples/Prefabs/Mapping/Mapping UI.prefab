@@ -4356,8 +4356,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6770458600202220108}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SwitchMode
+        m_TargetAssemblyTypeName: Immersal.Samples.Mapping.MappingUIManager, ImmersalSDK
+        m_MethodName: BackToChooseMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16988,6 +16988,7 @@ GameObject:
   - component: {fileID: 6941892059482480309}
   - component: {fileID: 442918472785509115}
   - component: {fileID: 1853624247615268736}
+  - component: {fileID: 3111551867065239451}
   m_Layer: 0
   m_Name: Mapping UI
   m_TagString: Untagged
@@ -17232,6 +17233,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!225 &3111551867065239451
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4200690996756743215}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4200690996759779525
 GameObject:
   m_ObjectHideFlags: 0
@@ -25364,8 +25377,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6770458600202220108}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: SwitchMode
+        m_TargetAssemblyTypeName: Immersal.Samples.Mapping.MappingUIManager, ImmersalSDK
+        m_MethodName: BackToChooseMode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
