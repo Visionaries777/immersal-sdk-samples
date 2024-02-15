@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class LoadItemsFromServer : MonoBehaviour
 {
-    [SerializeField] private string serverDomain = "http://192.168.1.164:12345/manifest";
+    private string serverDomain = "http://192.168.1.169:12345/manifest";
     [SerializeField] private string userId = "u001";
     private string filePath;
 
