@@ -1,4 +1,5 @@
 using Immersal.Samples.Mapping;
+using TMPro;
 using UnityEngine;
 
 public class ToggleAppMode : MonoBehaviour
@@ -9,6 +10,9 @@ public class ToggleAppMode : MonoBehaviour
     private GameObject m_MappingUI;
 
     private MappingUIManager mappingUIManager;
+    
+    [SerializeField] private TMP_InputField serverField;
+    private readonly string serverDomain = "http://192.168.1.171:12345";
 
     void Start()
     {
@@ -19,6 +23,31 @@ public class ToggleAppMode : MonoBehaviour
             loginManager.OnLogin += EnableMappingMode;
             loginManager.OnLogout += DisableMappingMode;
         }
+        
+        if (PlayerPrefs.HasKey("serverDomain"))
+        {
+            serverField.text = PlayerPrefs.GetString("serverDomain");
+        }
+        else
+        {
+            PlayerPrefs.SetString("serverDomain", serverDomain);
+        }
+    }
+
+    public void SetServerDomain(string s)
+    {
+        if (s.Length == 0)
+        {
+            s = serverDomain;
+            serverField.text = s;
+        }
+        else if (s[s.Length - 1] == '/')
+        {
+            s = s.Substring(0, s.Length - 1);
+            serverField.text = s;
+        }
+        
+        PlayerPrefs.SetString("serverDomain", serverField.text);
     }
     
     public void ImmersalServerMode()

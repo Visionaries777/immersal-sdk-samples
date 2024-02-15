@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public class LoadItemsFromServer : MonoBehaviour
 {
-    private string serverDomain = "http://192.168.1.169:12345/manifest";
     [SerializeField] private string userId = "u001";
     private string filePath;
 
@@ -24,7 +23,9 @@ public class LoadItemsFromServer : MonoBehaviour
 
     private IEnumerator GetItemListFromServer()
     {
-        using UnityWebRequest webRequest = UnityWebRequest.Get(serverDomain);
+        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=item");
+        
+        using UnityWebRequest webRequest = UnityWebRequest.Get(itemUrl);
         webRequest.SetRequestHeader("UID", userId);
             
         yield return webRequest.SendWebRequest();
@@ -54,8 +55,10 @@ public class LoadItemsFromServer : MonoBehaviour
 
     private IEnumerator UpdateItemListFromServer()
     {
+        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=item");
+        
         string jsonData = File.ReadAllText(filePath);
-        using UnityWebRequest webRequest = UnityWebRequest.Put(serverDomain, jsonData);
+        using UnityWebRequest webRequest = UnityWebRequest.Put(itemUrl, jsonData);
         webRequest.SetRequestHeader("UID", userId);
         
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
