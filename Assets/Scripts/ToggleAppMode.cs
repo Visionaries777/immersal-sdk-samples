@@ -31,6 +31,7 @@ public class ToggleAppMode : MonoBehaviour
         else
         {
             PlayerPrefs.SetString("serverDomain", serverDomain);
+            serverField.text = serverDomain;
         }
     }
 
@@ -49,12 +50,21 @@ public class ToggleAppMode : MonoBehaviour
         
         PlayerPrefs.SetString("serverDomain", serverField.text);
     }
+
+    public void AwsServerMode()
+    {
+        appModePanel.SetActive(false);
+        
+        ServerManager.Instance.GetItemsFromServer();
+    }
     
     public void ImmersalServerMode()
     {
         appModePanel.SetActive(false);
         
         mappingUIManager.ChangeMode(false);
+        
+        ServerManager.Instance.GetItemsFromServer();
     }
     
     public void ScanMode()

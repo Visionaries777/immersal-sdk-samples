@@ -10,6 +10,8 @@ Contact sales@immersal.com for licensing requests.
 ===============================================================================*/
 
 using System;
+using Immersal.AR;
+using Immersal.Samples.ContentPlacement;
 using UnityEngine;
 using UnityEngine.UI;
 using Immersal.Samples.Util;
@@ -20,6 +22,7 @@ namespace Immersal.Samples.Mapping
 	public class MappingUIManager : MonoBehaviour
 	{
 		private CanvasGroup canvasGroup;
+		private Mapper mapper;
 		public event SwitchModeEvent OnSwitch = null;
 		public delegate void SwitchModeEvent();
 	    
@@ -103,6 +106,7 @@ namespace Immersal.Samples.Mapping
 		private void Awake()
 		{
 			canvasGroup = GetComponent<CanvasGroup>();
+			mapper = GetComponent<Mapper>();
 		}
 
 		private void Start()
@@ -124,6 +128,28 @@ namespace Immersal.Samples.Mapping
 			canvasGroup.blocksRaycasts = true;
 			
 			ChangeState(isScan ? UIState.Workspace : UIState.Visualize);
+
+			if (isScan)
+			{
+				mapper.ToggleVisualization(false);
+				
+				foreach (var movableContent in ContentStorageManager.Instance.contentList)
+				{
+					movableContent.ToggleContent(false);
+				}
+			}
+			else
+			{
+				mapper.ToggleVisualization(true);
+				
+				foreach (var movableContent in ContentStorageManager.Instance.contentList)
+				{
+					if (ARSpace.mapIdToMap.ContainsKey(movableContent.mapId))
+					{
+						movableContent.ToggleContent(true);
+					}
+				}
+			}
 		}
 
 		public void BackToChooseMode()

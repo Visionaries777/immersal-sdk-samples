@@ -21,24 +21,81 @@ public class Map
 public class DownloadMaps : MonoBehaviour
 {
     [SerializeField] private Toggle mapTogglePrefab;
+    private List<Toggle> mapToggleList = new List<Toggle>();
 
+    [SerializeField] private TMP_InputField mapListNameField;
+    private readonly string mapListName = "map";
+
+    [SerializeField] private Transform layoutGroup;
+
+    [SerializeField] private Button confirmButton;
+    
     private void Start()
     {
-        StartCoroutine(ParseJsonFileFromUrl());
+        if (PlayerPrefs.HasKey("mapListName"))
+        {
+            mapListNameField.text = PlayerPrefs.GetString("mapListName");
+        }
+        else
+        {
+            PlayerPrefs.SetString("mapListName", mapListName);
+            mapListNameField.text = mapListName;
+        }
     }
 
-    private IEnumerator ParseJsonFileFromUrl()
+    public void SetMapListName(string s)
     {
-        var request = UnityWebRequest.Get("https://tools.inspekly.com/alpha/ICC01.json");
-        yield return request.SendWebRequest();
-        if (request.isDone && request.result != UnityWebRequest.Result.ConnectionError && request.responseCode == 200)
+        if (s.Length == 0)
         {
-            var json = request.downloadHandler.text;
+            s = mapListName;
+            mapListNameField.text = s;
+        }
+        else if (s[s.Length - 1] == '/')
+        {
+            s = s.Substring(0, s.Length - 1);
+            mapListNameField.text = s;
+        }
+        
+        PlayerPrefs.SetString("mapListName", mapListNameField.text);
+    }
+
+    public void ConfirmMapList()
+    {
+        confirmButton.interactable = false;
+        foreach (var toggle in mapToggleList)
+        {
+            if (toggle.isOn)
+            {
+                toggle.isOn = !toggle.isOn;
+            }
+            Destroy(toggle.gameObject);
+        }
+        mapToggleList.Clear();
+        
+        ServerManager.Instance.GetItemsFromServer();
+        
+        StartCoroutine(GetMapListFromServer());
+    }
+
+    private IEnumerator GetMapListFromServer()
+    {
+        var mapUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=" + PlayerPrefs.GetString("mapListName"));
+        
+        using UnityWebRequest webRequest = UnityWebRequest.Get(mapUrl);
+        webRequest.SetRequestHeader("UID", ServerManager.Instance.userId);
+        
+        yield return webRequest.SendWebRequest();
+        
+        if (webRequest.isDone && webRequest.result != UnityWebRequest.Result.ConnectionError && webRequest.responseCode == 200)
+        {
+            var json = webRequest.downloadHandler.text;
+            Debug.Log("Loaded server data : " + json);
             var maps = JsonConvert.DeserializeObject<List<Map>>(json);
 
             foreach (var map in maps)
             {
-                var toggle = Instantiate(mapTogglePrefab, transform);
+                var toggle = Instantiate(mapTogglePrefab, layoutGroup);
+                mapToggleList.Add(toggle);
                 toggle.onValueChanged.AddListener(value => LoadAndInstantiateARMap(map.fileName, map.mapId, toggle));
                 var textMeshPro = toggle.GetComponentInChildren<TextMeshProUGUI>();
                 textMeshPro.text = map.mapName;
@@ -46,8 +103,10 @@ public class DownloadMaps : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Failed to load JSON file: " + request.error);
+            Debug.LogError("Failed to load JSON file: " + webRequest.error);
         }
+
+        confirmButton.interactable = true;
     }
 
     private async void LoadAndInstantiateARMap(string fileName, int mapId, Selectable toggle)

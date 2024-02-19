@@ -1567,20 +1567,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8921681748432876245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5860559298469412974}
-        m_TargetAssemblyTypeName: Immersal.Samples.ContentPlacement.ContentStorageManager,
-          ImmersalSDK
-        m_MethodName: DeleteAllContent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1313579361373290440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4359,18 +4346,6 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: Immersal.Samples.Mapping.MappingUIManager, ImmersalSDK
         m_MethodName: BackToChooseMode
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6941892059482480309}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleVisualization
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -21596,20 +21571,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 398387776241224081}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5860559298469412974}
-        m_TargetAssemblyTypeName: Immersal.Samples.ContentPlacement.ContentStorageManager,
-          ImmersalSDK
-        m_MethodName: AddContent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2306168462438752955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25522,18 +25484,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6941892059482480309}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: ToggleVisualization
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 4053018065389481599}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Toggle, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &3281841516157671078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28701,8 +28651,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3299636889154209625}
   - component: {fileID: 1772014768321223812}
-  - component: {fileID: 5860559298469412974}
-  - component: {fileID: 2189271800026320601}
+  - component: {fileID: 7009231066863034837}
   m_Layer: 0
   m_Name: Visualize Mode
   m_TagString: Untagged
@@ -28759,7 +28708,7 @@ MonoBehaviour:
   m_PromptRestoreMap: {fileID: 3738765885326856990}
   m_OptionsScrollList: {fileID: 4292631801114848577}
   m_AlignMapsPrompt: {fileID: 1823256345238133596}
---- !u!114 &5860559298469412974
+--- !u!114 &7009231066863034837
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -28768,27 +28717,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6738659727881768826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a917ddcf0673abb4eb3e7dc933bab754, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d32b426527a044588246193998a2ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contentList: []
-  m_ContentPrefab: {fileID: 7007689986026079868, guid: 9747867fcd55e4da19b259ef5bbcfeed, type: 3}
-  m_ARSpace: {fileID: 0}
-  m_Filename: content.json
---- !u!114 &2189271800026320601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6738659727881768826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da59ff996976c4ca0baa8869e3818423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serverDomain: http://192.168.1.164:12345/manifest
-  userId: u001
+  addButton: {fileID: 7062011451027646354}
+  deleteButton: {fileID: 6036609175372227560}
   uploadButton: {fileID: 1037538851304878108}
 --- !u!1 &6751855864166914143
 GameObject:
@@ -33710,19 +33643,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4059702219423649639}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2189271800026320601}
-        m_TargetAssemblyTypeName: LoadItemsFromServer, Assembly-CSharp
-        m_MethodName: UploadItemList
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &7718088827152876551
 GameObject:
   m_ObjectHideFlags: 0

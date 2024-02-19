@@ -1,24 +1,70 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Text;
 using Immersal.Samples.ContentPlacement;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
 
-public class LoadItemsFromServer : MonoBehaviour
+public class ServerManager : MonoBehaviour
 {
-    [SerializeField] private string userId = "u001";
+    public string userId = "u001";
     private string filePath;
 
-    [SerializeField] private Button uploadButton;
+    private bool serverItemIsLoad;
+    private Coroutine getItemListFromServerCoroutine;
+    
+    public static ServerManager Instance
+    {
+        get
+        {
+#if UNITY_EDITOR
+            if (instance == null && !Application.isPlaying)
+            {
+                instance = FindObjectOfType<ServerManager>();
+            }
+#endif
+            if (instance == null)
+            {
+                Debug.LogError("No LoadItemsFromServer instance found. Ensure one exists in the scene.");
+            }
+            return instance;
+        }
+    }
+
+    private static ServerManager instance = null;
+    
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        if (instance != this)
+        {
+            Debug.LogError("There must be only one LoadItemsFromServer object in a scene.");
+            DestroyImmediate(this);
+        }
+    }
     
     private void Start()
     {
-        uploadButton.interactable = false;
-        
         filePath = Path.Combine(Application.persistentDataPath, ContentStorageManager.Instance.m_Filename);
-        StartCoroutine(GetItemListFromServer());
+        //StartCoroutine(GetItemListFromServer());
+    }
+
+    public void GetItemsFromServer()
+    {
+        if (getItemListFromServerCoroutine != null)
+        {
+            StopCoroutine(getItemListFromServerCoroutine);
+            getItemListFromServerCoroutine = null;
+        }
+        
+        if (!serverItemIsLoad)
+        {
+            getItemListFromServerCoroutine = StartCoroutine(GetItemListFromServer());
+        }
     }
 
     private IEnumerator GetItemListFromServer()
@@ -29,14 +75,14 @@ public class LoadItemsFromServer : MonoBehaviour
         webRequest.SetRequestHeader("UID", userId);
             
         yield return webRequest.SendWebRequest();
-        
-        uploadButton.interactable = true;
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
             string jsonResponse = webRequest.downloadHandler.text;
             File.WriteAllText(filePath, jsonResponse);
             Debug.Log("Loaded server data : " + jsonResponse);
+
+            serverItemIsLoad = true;
                 
             ContentStorageManager.Instance.LoadContents();
         }
@@ -46,14 +92,12 @@ public class LoadItemsFromServer : MonoBehaviour
         }
     }
 
-    public void UploadItemList()
+    public void UploadItemList(Action uploaded)
     {
-        uploadButton.interactable = false;
-        
-        StartCoroutine(UpdateItemListFromServer());
+        StartCoroutine(UpdateItemListFromServer(uploaded));
     }
 
-    private IEnumerator UpdateItemListFromServer()
+    private IEnumerator UpdateItemListFromServer(Action uploaded)
     {
         var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=item");
         
@@ -66,8 +110,6 @@ public class LoadItemsFromServer : MonoBehaviour
         
         yield return webRequest.SendWebRequest();
         
-        uploadButton.interactable = true;
-        
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Upload succeed");
@@ -76,5 +118,7 @@ public class LoadItemsFromServer : MonoBehaviour
         {
             Debug.LogError("Error: " + webRequest.error);
         }
+        
+        uploaded.Invoke();
     }
 }
