@@ -27,31 +27,31 @@ namespace Immersal.Samples.ContentPlacement
         private Transform m_CameraTransform;
         private float m_MovePlaneDistance;
 
-        public TMP_InputField itemName;
+        //public TMP_InputField itemName;
         public int mapId;
         
-        private LookAtConstraint lookAtConstraint;
+        /*private LookAtConstraint lookAtConstraint;
     
         private Transform cameraTransform;
 
         private Canvas canvas;
-        private BoxCollider boxCollider;
+        private BoxCollider boxCollider;*/
 
-        private void Awake()
+        /*private void Awake()
         {
             canvas = GetComponent<Canvas>();
             boxCollider = GetComponent<BoxCollider>();
             lookAtConstraint = GetComponent<LookAtConstraint>();
-        }
+        }*/
 
-        private void Start()
+        protected virtual void Start()
         {
             m_CameraTransform = Camera.main.transform;
             StoreContent();
-            LookAtCamera();
+            //LookAtCamera();
         }
 
-        private void LookAtCamera()
+        /*private void LookAtCamera()
         {
             if (lookAtConstraint == null)
             {
@@ -67,7 +67,7 @@ namespace Immersal.Samples.ContentPlacement
             lookAtConstraint.AddSource(source);
             lookAtConstraint.rotationOffset = new Vector3(0, -180, 0);
             lookAtConstraint.constraintActive = true;
-        }
+        }*/
 
         private void Update()
         {
@@ -78,7 +78,7 @@ namespace Immersal.Samples.ContentPlacement
             }
         }
 
-        private void StoreContent()
+        protected void StoreContent()
         {
             if (!ContentStorageManager.Instance.contentList.Contains(this))
             {
@@ -115,16 +115,21 @@ namespace Immersal.Samples.ContentPlacement
             m_EditingContent = false;
         }
 
-        public void UpdateName(string inputName)
+        /*public void UpdateName(string inputName)
         {
             StoreContent();
-        }
+        }*/
 
-        public void ToggleContent(bool isActive)
+        public virtual void ToggleContent(bool isActive)
         {
-            canvas.enabled = isActive;
+            /*canvas.enabled = isActive;
             boxCollider.enabled = isActive;
-            lookAtConstraint.enabled = isActive;
+            lookAtConstraint.enabled = isActive;*/
+        }
+        
+        public virtual TMP_InputField ItemNameInputField
+        {
+            get { return null; }
         }
     }
 }

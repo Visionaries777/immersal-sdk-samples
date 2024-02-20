@@ -139,7 +139,7 @@ namespace Immersal.Samples.ContentPlacement
             foreach (MovableContent content in contentList)
             {
                 m_Positions.Add(content.transform.localPosition);
-                m_Names.Add(content.itemName.text);
+                m_Names.Add(content.ItemNameInputField.text);
                 m_MapIds.Add(content.mapId);
             }
             m_Savefile.positions = m_Positions;
@@ -171,7 +171,7 @@ namespace Immersal.Samples.ContentPlacement
                     GameObject go = Instantiate(m_ContentPrefab, m_ARSpace.transform);
                     go.transform.localPosition = loadFile.positions[i];
                     var movableContent = go.GetComponent<MovableContent>();
-                    movableContent.itemName.text = loadFile.names[i];
+                    movableContent.ItemNameInputField.text = loadFile.names[i];
                     movableContent.mapId = loadFile.mapIds[i];
                     movableContent.ToggleContent(false);
                 }
