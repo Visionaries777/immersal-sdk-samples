@@ -20,7 +20,8 @@ namespace Immersal.Samples.ContentPlacement
     public enum ContentType
     {
         Checklist,
-        Diamond
+        Diamond,
+        Dashboard
     }
     
     public class ContentStorageManager : MonoBehaviour
@@ -114,6 +115,9 @@ namespace Immersal.Samples.ContentPlacement
                 case ContentType.Diamond:
                     go = Instantiate(m_ContentPrefab[1], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
                     break;
+                case ContentType.Dashboard:
+                    go = Instantiate(m_ContentPrefab[2], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -140,6 +144,9 @@ namespace Immersal.Samples.ContentPlacement
                     break;
                 case ContentType.Diamond:
                     go = Instantiate(m_ContentPrefab[1], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                case ContentType.Dashboard:
+                    go = Instantiate(m_ContentPrefab[2], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -214,6 +221,9 @@ namespace Immersal.Samples.ContentPlacement
                             break;
                         case ContentType.Diamond:
                             go = Instantiate(m_ContentPrefab[1], m_ARSpace.transform);
+                            break;
+                        case ContentType.Dashboard:
+                            go = Instantiate(m_ContentPrefab[2], m_ARSpace.transform);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();

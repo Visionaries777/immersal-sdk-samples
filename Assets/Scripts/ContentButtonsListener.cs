@@ -6,6 +6,7 @@ public class ContentButtonsListener : MonoBehaviour
 {
     [SerializeField] private Button addButtonChecklist;
     [SerializeField] private Button addButtonDiamond;
+    [SerializeField] private Button addButtonDashboard;
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button uploadButton;
 
@@ -13,6 +14,7 @@ public class ContentButtonsListener : MonoBehaviour
     {
         addButtonChecklist.onClick.AddListener(() => AddButtonOnClick(ContentType.Checklist));
         addButtonDiamond.onClick.AddListener(() => AddButtonOnClick(ContentType.Diamond));
+        addButtonDashboard.onClick.AddListener(() => AddButtonOnClick(ContentType.Dashboard));
         deleteButton.onClick.AddListener(DeleteButtonOnClick);
         uploadButton.onClick.AddListener(UploadButtonOnClick);
     }
