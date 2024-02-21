@@ -29,6 +29,7 @@ namespace Immersal.Samples.ContentPlacement
 
         //public TMP_InputField itemName;
         public int mapId;
+        public ContentType type;
         
         /*private LookAtConstraint lookAtConstraint;
     

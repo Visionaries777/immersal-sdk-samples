@@ -12,7 +12,7 @@ public class ToggleAppMode : MonoBehaviour
     private MappingUIManager mappingUIManager;
     
     [SerializeField] private TMP_InputField serverField;
-    private readonly string serverDomain = "http://192.168.1.171:12345";
+    private readonly string serverDomain = "https://tttcbz06i5.execute-api.ap-southeast-1.amazonaws.com/Prod";
 
     void Start()
     {

@@ -69,10 +69,10 @@ public class ServerManager : MonoBehaviour
 
     private IEnumerator GetItemListFromServer()
     {
-        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=item");
+        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=content");
         
         using UnityWebRequest webRequest = UnityWebRequest.Get(itemUrl);
-        webRequest.SetRequestHeader("UID", userId);
+        webRequest.SetRequestHeader("uid", userId);
             
         yield return webRequest.SendWebRequest();
 
@@ -99,11 +99,11 @@ public class ServerManager : MonoBehaviour
 
     private IEnumerator UpdateItemListFromServer(Action uploaded)
     {
-        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=item");
+        var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=content");
         
         string jsonData = File.ReadAllText(filePath);
         using UnityWebRequest webRequest = UnityWebRequest.Put(itemUrl, jsonData);
-        webRequest.SetRequestHeader("UID", userId);
+        webRequest.SetRequestHeader("uid", userId);
         
         byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
         webRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);

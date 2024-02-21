@@ -17,13 +17,19 @@ using Immersal.AR;
 
 namespace Immersal.Samples.ContentPlacement
 {
+    public enum ContentType
+    {
+        Checklist,
+        Diamond
+    }
+    
     public class ContentStorageManager : MonoBehaviour
     {
         [HideInInspector]
         public List<MovableContent> contentList = new List<MovableContent>();
 
         [SerializeField]
-        private GameObject m_ContentPrefab = null;
+        private List<GameObject> m_ContentPrefab = null;
         [SerializeField]
         private Immersal.AR.ARSpace m_ARSpace;
         [SerializeField]
@@ -32,6 +38,7 @@ namespace Immersal.Samples.ContentPlacement
         private List<Vector3> m_Positions = new List<Vector3>();
         private List<string> m_Names = new List<string>();
         private List<int> m_MapIds = new List<int>();
+        private List<ContentType> m_Types = new List<ContentType>();
 
         private int lastLoadedMapId = -1;
 
@@ -41,6 +48,7 @@ namespace Immersal.Samples.ContentPlacement
             public List<Vector3> positions;
             public List<string> names;
             public List<int> mapIds;
+            public List<ContentType> types;
         }
 
         public static ContentStorageManager Instance
@@ -88,7 +96,7 @@ namespace Immersal.Samples.ContentPlacement
             //LoadContents();
         }
 
-        public void AddContent()
+        public void AddContent(ContentType type)
         {
 #if UNITY_EDITOR
             if (lastLoadedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLoadedMapId))
@@ -97,9 +105,23 @@ namespace Immersal.Samples.ContentPlacement
             }
             ARMap map = ARSpace.mapIdToMap[lastLoadedMapId];
             Transform cameraTransform = Camera.main.transform;
-            GameObject go = Instantiate(m_ContentPrefab, cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
-            go.GetComponent<MovableContent>().mapId = lastLoadedMapId;
-            
+            GameObject go;
+            switch (type)
+            {
+                case ContentType.Checklist:
+                    go = Instantiate(m_ContentPrefab[0], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                case ContentType.Diamond:
+                    go = Instantiate(m_ContentPrefab[1], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            var movableContent = go.GetComponent<MovableContent>();
+            movableContent.mapId = lastLoadedMapId;
+            movableContent.type = type;
+
 #elif UNITY_ANDROID || UNITY_IOS
             var lastLocalizedMapId = ImmersalSDK.Instance.Localizer.lastLocalizedMapId;
             if (lastLocalizedMapId == -1 || !ARSpace.mapIdToMap.ContainsKey(lastLocalizedMapId))
@@ -110,9 +132,22 @@ namespace Immersal.Samples.ContentPlacement
             ARMap map = ARSpace.mapIdToMap[lastLocalizedMapId];
             
             Transform cameraTransform = Camera.main.transform;
-            GameObject go = Instantiate(m_ContentPrefab, cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+            GameObject go;
+            switch (type)
+            {
+                case ContentType.Checklist:
+                    go = Instantiate(m_ContentPrefab[0], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                case ContentType.Diamond:
+                    go = Instantiate(m_ContentPrefab[1], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
             
-            go.GetComponent<MovableContent>().mapId = lastLocalizedMapId;
+            var movableContent = go.GetComponent<MovableContent>();
+            movableContent.mapId = lastLocalizedMapId;
+            movableContent.type = type;
 #endif
         }
 
@@ -136,15 +171,18 @@ namespace Immersal.Samples.ContentPlacement
             m_Positions.Clear();
             m_Names.Clear();
             m_MapIds.Clear();
+            m_Types.Clear();
             foreach (MovableContent content in contentList)
             {
                 m_Positions.Add(content.transform.localPosition);
-                m_Names.Add(content.ItemNameInputField.text);
+                m_Names.Add(content.ItemNameInputField != null ? content.ItemNameInputField.text : "null");
                 m_MapIds.Add(content.mapId);
+                m_Types.Add(content.type);
             }
             m_Savefile.positions = m_Positions;
             m_Savefile.names = m_Names;
             m_Savefile.mapIds = m_MapIds;
+            m_Savefile.types = m_Types;
 
             string jsonstring = JsonUtility.ToJson(m_Savefile, true);
             string dataPath = Path.Combine(Application.persistentDataPath, m_Filename);
@@ -168,11 +206,26 @@ namespace Immersal.Samples.ContentPlacement
 
                 for (int i = 0; i < loadFile.positions.Count; i++)
                 {
-                    GameObject go = Instantiate(m_ContentPrefab, m_ARSpace.transform);
+                    GameObject go;
+                    switch (loadFile.types[i])
+                    {
+                        case ContentType.Checklist:
+                            go = Instantiate(m_ContentPrefab[0], m_ARSpace.transform);
+                            break;
+                        case ContentType.Diamond:
+                            go = Instantiate(m_ContentPrefab[1], m_ARSpace.transform);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                     go.transform.localPosition = loadFile.positions[i];
                     var movableContent = go.GetComponent<MovableContent>();
-                    movableContent.ItemNameInputField.text = loadFile.names[i];
+                    if (movableContent.ItemNameInputField != null)
+                    {
+                        movableContent.ItemNameInputField.text = loadFile.names[i];
+                    }
                     movableContent.mapId = loadFile.mapIds[i];
+                    movableContent.type = loadFile.types[i];
                     movableContent.ToggleContent(false);
                 }
 

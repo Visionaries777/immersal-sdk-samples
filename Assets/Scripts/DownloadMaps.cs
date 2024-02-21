@@ -82,7 +82,7 @@ public class DownloadMaps : MonoBehaviour
         var mapUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=" + PlayerPrefs.GetString("mapListName"));
         
         using UnityWebRequest webRequest = UnityWebRequest.Get(mapUrl);
-        webRequest.SetRequestHeader("UID", ServerManager.Instance.userId);
+        webRequest.SetRequestHeader("uid", ServerManager.Instance.userId);
         
         yield return webRequest.SendWebRequest();
         

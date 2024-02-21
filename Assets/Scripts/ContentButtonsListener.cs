@@ -4,20 +4,22 @@ using UnityEngine.UI;
 
 public class ContentButtonsListener : MonoBehaviour
 {
-    [SerializeField] private Button addButton;
+    [SerializeField] private Button addButtonChecklist;
+    [SerializeField] private Button addButtonDiamond;
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button uploadButton;
 
     private void Awake()
     {
-        addButton.onClick.AddListener(AddButtonOnClick);
+        addButtonChecklist.onClick.AddListener(() => AddButtonOnClick(ContentType.Checklist));
+        addButtonDiamond.onClick.AddListener(() => AddButtonOnClick(ContentType.Diamond));
         deleteButton.onClick.AddListener(DeleteButtonOnClick);
         uploadButton.onClick.AddListener(UploadButtonOnClick);
     }
 
-    private void AddButtonOnClick()
+    private void AddButtonOnClick(ContentType type)
     {
-        ContentStorageManager.Instance.AddContent();
+        ContentStorageManager.Instance.AddContent(type);
     }
     
     private void DeleteButtonOnClick()
