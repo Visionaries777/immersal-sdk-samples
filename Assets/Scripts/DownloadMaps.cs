@@ -24,7 +24,7 @@ public class DownloadMaps : MonoBehaviour
     private List<Toggle> mapToggleList = new List<Toggle>();
 
     [SerializeField] private TMP_InputField mapListNameField;
-    private readonly string mapListName = "map";
+    private readonly string mapListName = "office";
 
     [SerializeField] private Transform layoutGroup;
 
