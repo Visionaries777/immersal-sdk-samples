@@ -9,6 +9,7 @@ public class ContentButtonsListener : MonoBehaviour
     [SerializeField] private Button addButtonDashboard;
     [SerializeField] private Button addButtonFirework;
     [SerializeField] private Button addButtonVideo;
+    [SerializeField] private Button addButtonDragon;
     [SerializeField] private Button deleteButton;
     [SerializeField] private Button uploadButton;
 
@@ -19,6 +20,7 @@ public class ContentButtonsListener : MonoBehaviour
         addButtonDashboard.onClick.AddListener(() => AddButtonOnClick(ContentType.Dashboard));
         addButtonFirework.onClick.AddListener(() => AddButtonOnClick(ContentType.Firework));
         addButtonVideo.onClick.AddListener(() => AddButtonOnClick(ContentType.Video));
+        addButtonDragon.onClick.AddListener(() => AddButtonOnClick(ContentType.Dragon));
         deleteButton.onClick.AddListener(DeleteButtonOnClick);
         uploadButton.onClick.AddListener(UploadButtonOnClick);
     }
