@@ -22,7 +22,8 @@ namespace Immersal.Samples.ContentPlacement
         Checklist,
         Diamond,
         Dashboard,
-        Firework
+        Firework,
+        Video
     }
     
     public class ContentStorageManager : MonoBehaviour
@@ -122,6 +123,9 @@ namespace Immersal.Samples.ContentPlacement
                 case ContentType.Firework:
                     go = Instantiate(m_ContentPrefab[3], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
                     break;
+                case ContentType.Video:
+                    go = Instantiate(m_ContentPrefab[4], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -154,6 +158,9 @@ namespace Immersal.Samples.ContentPlacement
                     break;
                 case ContentType.Firework:
                     go = Instantiate(m_ContentPrefab[3], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
+                    break;
+                case ContentType.Video:
+                    go = Instantiate(m_ContentPrefab[4], cameraTransform.position + cameraTransform.forward, Quaternion.identity, map.transform);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -234,6 +241,9 @@ namespace Immersal.Samples.ContentPlacement
                             break;
                         case ContentType.Firework:
                             go = Instantiate(m_ContentPrefab[3], m_ARSpace.transform);
+                            break;
+                        case ContentType.Video:
+                            go = Instantiate(m_ContentPrefab[4], m_ARSpace.transform);
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
