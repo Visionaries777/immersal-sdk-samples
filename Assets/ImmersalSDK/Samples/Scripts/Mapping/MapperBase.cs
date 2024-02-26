@@ -140,7 +140,7 @@ namespace Immersal.Samples.Mapping
             }
 
             StatusPoll();
-            Jobs();
+            //Jobs();
         }
 
         protected virtual void OnDisable()
