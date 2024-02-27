@@ -7,6 +7,7 @@ public class UISwitchMode : MonoBehaviour
     [SerializeField] private WorkspaceManager workspaceManager;
     
     [SerializeField] private GameObject workSpaceOldUI, workSpaceNewUI;
+    [SerializeField] private GameObject visualizeOldUI, visualizeNewUI;
 
     [SerializeField] private GameObject passCode;
     [SerializeField] private TMP_InputField passCodeInputField;
@@ -31,6 +32,10 @@ public class UISwitchMode : MonoBehaviour
         {
             workSpaceOldUI.SetActive(!debugMode);
             workSpaceNewUI.SetActive(debugMode);
+            
+            visualizeOldUI.SetActive(!debugMode);
+            visualizeNewUI.SetActive(debugMode);
+            
             workspaceManager.enabled = !debugMode;
             
             workspaceManager.newMapName = oldUIMapName;

@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using System.Text;
 using Immersal.Samples.ContentPlacement;
+using Immersal.Samples.Mapping;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -80,7 +81,8 @@ public class ServerManager : MonoBehaviour
         {
             string jsonResponse = webRequest.downloadHandler.text;
             File.WriteAllText(filePath, jsonResponse);
-            Debug.Log("Loaded server data : " + jsonResponse);
+            //Debug.Log("Loaded server data : " + jsonResponse);
+            NotificationManager.Instance.GenerateSuccess("Downloaded Contents!");
 
             serverItemIsLoad = true;
                 
@@ -89,15 +91,16 @@ public class ServerManager : MonoBehaviour
         else
         {
             Debug.LogError("Error: " + webRequest.error);
+            NotificationManager.Instance.GenerateError("Download Contents Failed!");
         }
     }
 
-    public void UploadItemList(Action uploaded)
+    public void UploadItemList(Action<bool> uploaded)
     {
         StartCoroutine(UpdateItemListFromServer(uploaded));
     }
 
-    private IEnumerator UpdateItemListFromServer(Action uploaded)
+    private IEnumerator UpdateItemListFromServer(Action<bool> uploaded)
     {
         var itemUrl = Path.Combine(PlayerPrefs.GetString("serverDomain"), "json?fileName=content");
         
@@ -113,12 +116,12 @@ public class ServerManager : MonoBehaviour
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
             Debug.Log("Upload succeed");
+            uploaded.Invoke(true);
         }
         else
         {
             Debug.LogError("Error: " + webRequest.error);
+            uploaded.Invoke(false);
         }
-        
-        uploaded.Invoke();
     }
 }
