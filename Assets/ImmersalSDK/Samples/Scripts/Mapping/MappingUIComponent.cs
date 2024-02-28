@@ -22,8 +22,8 @@ namespace Immersal.Samples.Mapping
 		[SerializeField]
 		private TextMeshProUGUI[] texts = null;
 
-		private Image image = null;
-		private Button button = null;
+		protected Image image = null;
+		protected Button button = null;
 
 		private Color button_normalColor = new Color(0f, 0f, 0f, 0.8f);
 		private Color button_disabledColor = new Color(0f, 0f, 0f, 0.4f);
@@ -43,7 +43,7 @@ namespace Immersal.Samples.Mapping
 			}
 		}
 
-		public void Activate() {
+		public virtual void Activate() {
 			if(image != null) {
 				image.color = button_normalColor;
 			}
@@ -60,7 +60,7 @@ namespace Immersal.Samples.Mapping
 			}
 		}
 
-		public void Disable() {
+		public virtual void Disable() {
 			if (image != null) {
 				image.color = button_disabledColor;
 			}

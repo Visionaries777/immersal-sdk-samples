@@ -38,8 +38,8 @@ namespace Immersal.Samples.Mapping
         [SerializeField]
         private HorizontalProgressBar m_ProgressBar = null;
         
-		private enum UIState {Workspace, Visualize};
-		private UIState uiState = UIState.Workspace;
+		public enum UIState {Workspace, Visualize};
+		public UIState uiState = UIState.Workspace;
 
 		[SerializeField] private TextMeshProUGUI loggedInAsText = null;
 		
@@ -78,7 +78,8 @@ namespace Immersal.Samples.Mapping
 	        LoginManager.Instance.Logout();
         }
 
-		private void ChangeState(UIState state) {
+		public void ChangeState(UIState state)
+		{
 			switch (state) {
 				case UIState.Workspace:
                     workspaceManager.gameObject.SetActive(true);
@@ -128,6 +129,7 @@ namespace Immersal.Samples.Mapping
 			canvasGroup.blocksRaycasts = true;
 			
 			ChangeState(isScan ? UIState.Workspace : UIState.Visualize);
+			uiState = isScan ? UIState.Workspace : UIState.Visualize;
 
 			if (isScan)
 			{
