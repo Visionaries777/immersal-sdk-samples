@@ -34,11 +34,6 @@ namespace Immersal.Samples.Mapping
         public delegate void SelectorOpened();
         public delegate void SelectorClosed();
 
-        /*[SerializeField]
-        private MappingUIComponent m_AddItemButton = null;
-        [SerializeField]
-        private MappingUIComponent m_DeleteItemButton = null;*/
-        
         [SerializeField]
         private MappingUIComponent m_OptionsButton = null;
         [SerializeField]
@@ -162,8 +157,6 @@ namespace Immersal.Samples.Mapping
                     m_InfoPanel.Activate();
                     localizeButton.Activate();
                     m_OptionsButton.Activate();
-                    /*m_AddItemButton.Activate();
-                    m_DeleteItemButton.Activate();*/
                     m_MapDownloadButton.Activate();
                     m_MapDownloadList.SetActive(false);
                     m_OptionsScrollList.SetActive(false);
@@ -174,8 +167,6 @@ namespace Immersal.Samples.Mapping
                     m_InfoPanel.Disable();
                     localizeButton.Disable();
                     m_OptionsButton.Disable();
-                    /*m_AddItemButton.Disable();
-                    m_DeleteItemButton.Disable();*/
                     m_MapDownloadButton.Activate();
                     m_MapDownloadList.SetActive(true);
                     m_OptionsScrollList.SetActive(false);
@@ -186,8 +177,6 @@ namespace Immersal.Samples.Mapping
                     m_InfoPanel.Disable();
                     localizeButton.Disable();
                     m_OptionsButton.Activate();
-                    /*m_AddItemButton.Disable();
-                    m_DeleteItemButton.Disable();*/
                     m_MapDownloadButton.Disable();
                     m_MapDownloadList.SetActive(false);
                     m_OptionsScrollList.SetActive(true);
@@ -197,8 +186,6 @@ namespace Immersal.Samples.Mapping
                     m_InfoPanel.Disable();
                     localizeButton.Disable();
                     m_OptionsButton.Activate();
-                    /*m_AddItemButton.Disable();
-                    m_DeleteItemButton.Disable();*/
                     m_MapDownloadButton.Disable();
                     m_MapDownloadList.SetActive(false);
                     m_OptionsScrollList.SetActive(false);
