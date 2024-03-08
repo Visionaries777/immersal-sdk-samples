@@ -36247,8 +36247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d32b426527a044588246193998a2ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addButtonChecklist: {fileID: 8275533534431466351}
-  addButtonChecklist_NewUI: {fileID: 8477589553560587234}
+  addButtonChecklist: {fileID: 8477589553560587234}
   addButtonDiamond: {fileID: 8129270648338728797}
   addButtonDashboard: {fileID: 4060989013376585729}
   addButtonFirework: {fileID: 810079087039084571}

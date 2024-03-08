@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class ContentButtonsListener : MonoBehaviour
 {
     [SerializeField] private Button addButtonChecklist;
-    [SerializeField] private Button addButtonChecklist_NewUI;
     [SerializeField] private Button addButtonDiamond;
     [SerializeField] private Button addButtonDashboard;
     [SerializeField] private Button addButtonFirework;
@@ -18,7 +17,6 @@ public class ContentButtonsListener : MonoBehaviour
     private void Awake()
     {
         addButtonChecklist.onClick.AddListener(() => AddButtonOnClick(ContentType.Checklist));
-        addButtonChecklist_NewUI.onClick.AddListener(() => AddButtonOnClick(ContentType.Checklist));
         addButtonDiamond.onClick.AddListener(() => AddButtonOnClick(ContentType.Diamond));
         addButtonDashboard.onClick.AddListener(() => AddButtonOnClick(ContentType.Dashboard));
         addButtonFirework.onClick.AddListener(() => AddButtonOnClick(ContentType.Firework));

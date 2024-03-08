@@ -139,6 +139,12 @@ namespace Immersal.Samples.Mapping
 				{
 					movableContent.ToggleContent(false);
 				}
+
+				if (mapper.stats.imageCount != 0)
+				{
+					mapper.ResetMapperPictures(true);
+					NotificationManager.Instance.GenerateNotification("Workspace images reset");
+				}
 			}
 			else
 			{
